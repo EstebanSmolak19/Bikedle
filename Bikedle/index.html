@@ -7,8 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1> Bikedle - Devine la voiture, et roule vers la victoire !</h1>
+        <p class="timer"></p>
+    </header>
+
     <div class="game-container">
-        <h1>Bikedle</h1>
+        <h1 class="title">Bikedle</h1>
         <p>Devinez la moto en utilisant les indices visuels.</p>
         <!-- Conteneur pour afficher l'image -->
         <div id="image-container">
@@ -20,10 +25,27 @@
         <!-- Zone de feedback -->
         <div id="feedback"></div>
         <!-- Compteur d'essais -->
-        <p id="attempts">Essais restants : <span id="remaining-attempts">3</span></p>
+        <p id="attempts">Essais restants : <span id="remaining-attempts"></span></p>
         <!-- Bouton pour passer à la moto suivante -->
         <button id="next-btn" style="display: none;">Suivant</button>
+
+        <audio id="soundEffect" src="sonores/son.mp3" preload="auto"></audio>
     </div>
+
+    <div class="game-container-select">
+        <h1> Options </h1>
+        <label for="games"> Sélection des jeux </label>
+        <select name="games-select">
+            <option value="normal" class='option'> Normal </option>
+            <option value="flou" class='option'> Flou </option>
+            <option value="Timer" class='option'> Timer </option>
+        </select>
+        <button class="valideBtn"> Valider </button>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BTS SIO-Bikedle </p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>

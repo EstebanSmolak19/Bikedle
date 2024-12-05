@@ -5,7 +5,8 @@
           "images": [
               "images/yamaha-r1-1.jpg",
               "images/yamaha-r1-2.jpg",
-              "images/yamaha-r1-3.jpg"
+              "images/yamaha-r1-3.jpg",
+              "images/background.jpg"
           ]
       },
       {
@@ -13,7 +14,8 @@
           "images": [
               "images/ducati-pani-1.jpg",
               "images/ducati-pani-2.jpg",
-              "images/ducati-pani-3.jpg"
+              "images/ducati-pani-3.jpg",
+              "images/background.jpg"
           ]
       }
   ]

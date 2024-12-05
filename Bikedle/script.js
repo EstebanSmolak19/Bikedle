@@ -4,20 +4,23 @@ fetch('data.json')
     .then(data => initializeGame(data))
     .catch(err => console.error('Erreur lors du chargement des données :', err));
 
+const motoImage = document.getElementById('moto-image'); // Image affichée
+
 function initializeGame(data) {
     let currentMotoIndex = 0; // Index de la moto actuelle
-    let attemptsLeft = 3; // Nombre d'essais restants
+    let attemptsLeft = data.motos[currentMotoIndex]["images"].length; // Nombre d'essais restants
     let currentImageIndex = 0; // Index de l'image affichée pour la moto actuelle
 
-    const motoImage = document.getElementById('moto-image'); // Image affichée
     const guessInput = document.getElementById('guess-input'); // Zone de saisie
     const submitBtn = document.getElementById('submit-btn'); // Bouton "Valider"
     const feedback = document.getElementById('feedback'); // Zone de feedback
     const remainingAttempts = document.getElementById('remaining-attempts'); // Compteur d'essais
     const nextBtn = document.getElementById('next-btn'); // Bouton "Suivant"
+    remainingAttempts.textContent = attemptsLeft;
 
     // Charger la première image de la première moto
     loadMotoImage(data.motos[currentMotoIndex].images[currentImageIndex]);
+
 
     // Gestion du clic sur le bouton "Valider"
     submitBtn.addEventListener('click', () => {
@@ -40,6 +43,7 @@ function initializeGame(data) {
                 if (currentImageIndex < data.motos[currentMotoIndex].images.length) {
                     feedback.textContent = "Mauvaise réponse. Un nouvel indice apparaît.";
                     feedback.style.color = "red";
+
                     loadMotoImage(data.motos[currentMotoIndex].images[currentImageIndex]);
                 } else {
                     // Si plus d'images disponibles, reste sur la dernière
@@ -60,7 +64,7 @@ function initializeGame(data) {
     // Gestion du clic sur le bouton "Suivant"
     nextBtn.addEventListener('click', () => {
         currentMotoIndex++;
-        attemptsLeft = 3;
+        attemptsLeft = data.motos[currentMotoIndex]["images"].length;
         currentImageIndex = 0; // Réinitialise l'index des images
         if (currentMotoIndex < data.motos.length) {
             feedback.textContent = '';
@@ -80,4 +84,79 @@ function initializeGame(data) {
     function loadMotoImage(imageUrl) {
         motoImage.src = imageUrl;
     }
+}
+
+let blurPx = 25;
+
+function timer(temps) {
+
+    const display = document.querySelector('.timer');
+    display.textContent = temps;
+    temps--; 
+
+    const countdownTimeout = setTimeout(() => {
+        if (temps >= 0) {
+            timer(temps);
+        } else {
+            display.style.display = "none"
+            console.log("Le temps est écoulé, le flou est supprimé.");
+        }
+    }, 1000); 
+}
+
+
+function flou() {
+    const blurInterval = setInterval(() => {
+        if (blurPx > 0) {
+            blurPx -= 5; 
+            motoImage.style.filter = `blur(${blurPx}px)`;
+            console.log('Flou appliqué:', blurPx);
+        } else {
+            clearInterval(blurInterval);
+        }
+    }, 5000); 
+}
+
+const valideBtn = document.querySelector('.valideBtn');
+const selectElement = document.querySelector('select[name="games-select"]');
+const game_container = document.querySelector('.game-container');
+const select_games = document.querySelector('.game-container-select');
+const title = document.querySelector('.title');
+
+const gameFunctions = {
+    normal: startNormalGame,
+    flou: startBlurGame,
+    timer: timerGame
+};
+
+valideBtn.addEventListener('click', () => {
+    const selectedValue = selectElement.value; 
+    const selectedFunction = gameFunctions[selectedValue];
+    if (selectedFunction) {
+        selectedFunction(); 
+    }
+});
+
+function startNormalGame() {
+    motoImage.style.filter = `blur(0px)`;
+    select_games.style.display = "none";
+    game_container.style.display = "block";
+    title.innerHTML = `Bikedle <span> NormalGame </span>`
+}
+
+function startBlurGame() {
+    select_games.style.display = "none";
+    game_container.style.display = "block";
+    title.innerHTML = `Bikedle <span> BlurGame </span>`
+    flou()
+    timer(30)
+}
+
+function timerGame() {
+    console.log('oui')
+    motoImage.style.filter = `blur(0px)`;
+    select_games.style.display = "none";
+    game_container.style.display = "block";
+    title.innerHTML = `Bikedle <span> timerGame </span>`
+    timer(30);
 }
