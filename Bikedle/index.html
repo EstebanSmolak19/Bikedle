@@ -9,7 +9,6 @@
 <body>
     <header>
         <h1> Bikedle - Devine la voiture, et roule vers la victoire !</h1>
-        <p class="timer"></p>
     </header>
 
     <div class="game-container">
@@ -28,20 +27,58 @@
         <p id="attempts">Essais restants : <span id="remaining-attempts"></span></p>
         <!-- Bouton pour passer à la moto suivante -->
         <button id="next-btn" style="display: none;">Suivant</button>
-
-        <audio id="soundEffect" src="sonores/son.mp3" preload="auto"></audio>
     </div>
 
+    <!-- Carousel pour select un jeu -->
     <div class="game-container-select">
-        <h1> Options </h1>
-        <label for="games"> Sélection des jeux </label>
-        <select name="games-select">
-            <option value="normal" class='option'> Normal </option>
-            <option value="flou" class='option'> Flou </option>
-            <option value="Timer" class='option'> Timer </option>
-        </select>
-        <button class="valideBtn"> Valider </button>
+        <h1> Options des jeux </h1>
+        <div class="slideshow-content">
+            <div class="mySlides fade">
+                <h3> Mode Normal </h3>
+                <p class="text">Devinez le véhicule à partir des images qui s'affichent progressivement.
+                À chaque tentative, une nouvelle image du véhicule est révélée pour vous guider. 
+                Aucun chrono ni pénalité : prenez tout votre temps pour trouver la bonne réponse !</p> 
+                <button class="valideBtn" onclick="startNormalGame()"> Jouer </button>
+            </div>
+
+            <div class="mySlides fade">
+                <h3> Mode Flou </h3>
+                <p class="text">Devinez le véhicule à partir d'images floutées qui s'affichent progressivement de moins en moins flou.
+                    À chaque tentative, une nouvelle image du véhicule est révélée pour vous guider. 
+                    Vous avez 30 secondes par images sinon c'est perdu !</p>
+                <button class="valideBtn" onclick="startBlurGame()"> Jouer </button>
+
+            </div>
+
+            <div class="mySlides fade">
+                <h3> Mode Timer</h3>
+                <p class="text">Devinez le véhicule à partir des images qui s'affichent progressivement.
+                    À chaque tentative, une nouvelle image du véhicule est révélée pour vous guider. 
+                   30 secondes aux chrono sur l'ensemble des images de la moto sinon c'est perdu !</p> 
+                <button class="valideBtn" onclick="timerGame()"> Jouer </button>
+
+            </div>
+
+            <p class="prev" onclick="plusSlides(-1)">&#10094;</p>
+            <p class="next" onclick="plusSlides(1)">&#10095;</p>
+
+        </div>
+    </div>  
+
+    <div class="timer-container">
+        <div class="timer">
+            <div class="circle-background">
+                <div class="circle-progress" id="circle-progress"></div>
+            </div>
+            <div class="time" id="time-display">30</div>
+        </div>
     </div>
+
+    <audio id="TimerAudio" src="sonores/clock.mp3" preload="auto"></audio>
+    <audio id="ErrorAudio" src="sonores/error.mp3" preload="auto"></audio>
+    <audio id="Game-Over-Audio" src="sonores/gameover.mp3" preload="auto"></audio>
+    <audio id="CorrectAudio" src="sonores/correct.mp3" preload="auto"></audio>
+    <audio id="FondAudio" src="sonores/fond.mp3" preload="auto"></audio>
 
     <footer>
         <p>&copy; 2024 BTS SIO-Bikedle </p>

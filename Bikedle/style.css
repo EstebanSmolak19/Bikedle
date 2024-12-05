@@ -1,7 +1,11 @@
-/* Style général */
+:root {
+  --main-color: #ffe058;
+  --text-color: #4034f1;
+}
+
+
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
   display: flex;
@@ -13,22 +17,22 @@ body {
 }
 
 span {
-  color: red;
+  color: rgb(221, 224, 3);
+  text-shadow: rgb(107, 247, 19) 1px 0 10px;
 }
 
 header {
-  background-color: #ffe058;
+  background-color: var(--main-color);
   position: fixed;
   top: 0;
   width: 100%;
   color: white;
   padding: 20px;
   text-align: center;
-  color: black
+  color: var(--text-color);
 }
 
-.game-container,
-.game-container-select {
+.game-container{
   text-align: center;
   background: white;
   padding: 20px;
@@ -36,18 +40,18 @@ header {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 400px;
-}
-
-.game-container {
   display: none;
+
 }
 
 #image-container img {
   width: 100%;
+  height: 100%;
   max-width: 300px;
+  max-height: 150px;
   border-radius: 8px;
   margin-bottom: 20px;
-  filter: blur(30px);
+  object-fit: contain; 
 }
 
 input[type="text"] {
@@ -61,14 +65,17 @@ input[type="text"] {
 
 button {
   padding: 10px 20px;
+  margin-top: 20px;
   font-size: 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  background-color: #ffe058;
+  background-color: var(--main-color);
   color: rgb(51, 51, 51);
   font-weight: bold;
-  transition: .5s ease
+  transition: .5s ease;
+  position: relative;
+  bottom: 1rem;
 }
 
 button:hover {
@@ -96,7 +103,7 @@ button:hover {
 }
 
 footer {
-  background-color: #ffe058;
+  background-color: var(--main-color);
   color: white;
   padding: 10px;
   text-align: center;
@@ -125,4 +132,144 @@ option {
 
 option:hover {
   background-color: #ffcc00; 
+}
+
+/* Style de base pour le carousel */
+.game-container-select{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  max-height: 600px;
+  width: 50%;
+  height: 40%;
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  background-color: rgba(52, 52, 52, 0.7);
+}
+
+.game-container-select h1 {
+  position: relative;
+  top: 0;
+  padding-bottom: 30px;
+  color: #ffff;
+}
+
+
+.mySlides h3 {
+  color: var(--main-color);
+  font-size: 20px;
+}
+
+.mySlides {
+  display: none;
+  position: relative;
+  left: 5.5rem;
+  width: 80%;
+  height: 80%;
+  background: linear-gradient(#285B71 28%, #316F89 47%, #3C88A8 69%, #4CADD7 100%);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 8px;
+  text-align: center;
+  padding: 10px
+
+}
+
+.text {
+  color: #ffff;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  transform: translateY(-50%);
+  transition: background-color 0.3s;
+}
+
+.next {
+  right: 15px;
+}
+
+.prev {
+  left: 15px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Effet de fondu pour les slides */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: 0.4}
+  to {opacity: 1}
+}
+
+/* chronomètre */
+
+.timer-container {
+  text-align: center;
+  display: none;
+  position: absolute;
+  left: 200px;
+}
+
+.timer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.circle-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #444;
+}
+
+.circle-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(#4CAF50 0%, #444 0%);
+  transform: rotate(-90deg);
+  transition: background 0.5s linear; 
+}
+
+.time {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
 }
