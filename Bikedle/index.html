@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bikedle - Devinez la Moto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Bikedle</h1>
+        <p>Devinez la moto en utilisant les indices visuels.</p>
+        <!-- Conteneur pour afficher l'image -->
+        <div id="image-container">
+            <img id="moto-image" src="" alt="Visuel de la moto">
+        </div>
+        <!-- Zone de saisie -->
+        <input id="guess-input" type="text" placeholder="Entrez le nom de la moto">
+        <button id="submit-btn">Valider</button>
+        <!-- Zone de feedback -->
+        <div id="feedback"></div>
+        <!-- Compteur d'essais -->
+        <p id="attempts">Essais restants : <span id="remaining-attempts">3</span></p>
+        <!-- Bouton pour passer à la moto suivante -->
+        <button id="next-btn" style="display: none;">Suivant</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
