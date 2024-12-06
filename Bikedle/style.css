@@ -1,8 +1,7 @@
 :root {
-  --main-color: #ffe058;
+  --main-color: #fae06e;
   --text-color: #4034f1;
 }
-
 
 body {
   font-family: Arial, sans-serif;
@@ -17,8 +16,8 @@ body {
 }
 
 span {
-  color: rgb(221, 224, 3);
-  text-shadow: rgb(107, 247, 19) 1px 0 10px;
+  color: var(--text-color);
+  text-shadow: rgb(129, 241, 0) 1px 0 10px;
 }
 
 header {
@@ -41,7 +40,6 @@ header {
   width: 90%;
   max-width: 400px;
   display: none;
-
 }
 
 #image-container img {
@@ -152,12 +150,11 @@ option:hover {
 }
 
 .game-container-select h1 {
-  position: relative;
-  top: 0;
+  display: flex;
+  justify-content: center;
   padding-bottom: 30px;
   color: #ffff;
 }
-
 
 .mySlides h3 {
   color: var(--main-color);
@@ -176,8 +173,7 @@ option:hover {
   flex-direction: column;
   border-radius: 8px;
   text-align: center;
-  padding: 10px
-
+  padding: 10px;
 }
 
 .text {
@@ -228,7 +224,6 @@ option:hover {
 }
 
 /* chronomètre */
-
 .timer-container {
   text-align: center;
   display: none;
@@ -262,7 +257,7 @@ option:hover {
   border-radius: 50%;
   background: conic-gradient(#4CAF50 0%, #444 0%);
   transform: rotate(-90deg);
-  transition: background 0.5s linear; 
+  transition: .5s linear; 
 }
 
 .time {

@@ -3,20 +3,30 @@
       {
           "name": "Yamaha R1",
           "images": [
-              "images/yamaha-r1-1.jpg",
-              "images/yamaha-r1-2.jpg",
-              "images/yamaha-r1-3.jpg",
-              "images/background.jpg"
+              "images/YamahaR1/yamaha-r1-1.jpg",
+              "images/YamahaR1/yamaha-r1-2.jpg",
+              "images/YamahaR1/yamaha-r1-3.jpg",
+              "images/YamahaR1/yamaha-r1-4.jpg"
           ]
       },
       {
           "name": "Ducati Panigale",
           "images": [
-              "images/ducati-pani-1.jpg",
-              "images/ducati-pani-2.jpg",
-              "images/ducati-pani-3.jpg",
-              "images/background.jpg"
+              "images/ducati-pani/ducati-pani-1.jpg",
+              "images/ducati-pani/ducati-pani-2.jpg",
+              "images/ducati-pani/ducati-pani-3.jpg",
+              "images/ducati-pani/ducati-pani-4.jpg"
           ]
-      }
+      },
+      {
+        "name": "Hond CB1000R",
+        "images": [
+            "images/Hond-CB1000R/Hond-CB1000R-1.png",
+            "images/Hond-CB1000R/Hond-CB1000R-2.png",
+            "images/Hond-CB1000R/Hond-CB1000R-3.png",
+            "images/Hond-CB1000R/Hond-CB1000R-4.jpg"
+        ]
+    }
   ]
 }
+

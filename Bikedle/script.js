@@ -1,39 +1,37 @@
 // Charger les données JSON contenant les images et noms des motos
-fetch('data.json')
+function loadJson() {
+    fetch('data.json')
     .then(response => response.json())
     .then(data => initializeGame(data))
     .catch(err => console.error('Erreur lors du chargement des données :', err));
+}
 
 const motoImage = document.getElementById('moto-image'); // Image affichée
 const feedback = document.getElementById('feedback'); // Zone de feedback
 const nextBtn = document.getElementById('next-btn'); // Bouton "Suivant"
 const submitBtn = document.getElementById('submit-btn'); // Bouton "Valider"
 let currentMotoIndex = 0; // Index de la moto actuelle
+const guessInput = document.getElementById('guess-input'); // Zone de saisie
+const remainingAttempts = document.getElementById('remaining-attempts'); // Compteur d'essais
 
 function initializeGame(data) {
     let attemptsLeft = data.motos[currentMotoIndex]["images"].length; // Nombre d'essais restants
     let currentImageIndex = 0; // Index de l'image affichée pour la moto actuelle
     let blurInterval;
-
-    const guessInput = document.getElementById('guess-input'); // Zone de saisie
-    const remainingAttempts = document.getElementById('remaining-attempts'); // Compteur d'essais
     remainingAttempts.textContent = attemptsLeft;
 
     // Charger la première image de la première moto
     loadMotoImage(data.motos[currentMotoIndex].images[currentImageIndex]);
 
-
     // Gestion du clic sur le bouton "Valider"
     submitBtn.addEventListener('click', () => {
-        const userGuess = guessInput.value.trim(); // Récupère et nettoie la saisie
-        const correctName = data.motos[currentMotoIndex].name; // Nom correct de la moto
-
+        var userGuess = guessInput.value.trim(); // Récupère et nettoie la saisie
+        var correctName = data.motos[currentMotoIndex].name; // Nom correct de la moto
         if(currentMode !== "normal"){
             chronometre.style.display = "block"; //rajoue du chronomètre
         }
-       
-        if (userGuess.toLowerCase() === correctName.toLowerCase()) {
 
+        if (userGuess.toLowerCase() === correctName.toLowerCase()) {
             if(currentMode !== "normal"){
                 TimerAudio.pause()
                 CorrectAudio.play()
@@ -41,9 +39,8 @@ function initializeGame(data) {
                 motoImage.style.filter = `blur(0px)`;  
                 clearInterval(blurInterval);
                 remainingAttempts.innerHTML = `0`; 
-                verificationGame(data)
+                verificationGame(data, correctName)
             }
-
             // Si la réponse est correcte
             feedback.textContent = "Bravo ! Vous avez trouvé la bonne moto.";
             feedback.style.color = "green";
@@ -63,14 +60,15 @@ function initializeGame(data) {
                         feedback.textContent = "Mauvaise réponse. Un nouvel indice apparaît.";
                         feedback.style.color = "red";
 
+                        nextBtn.style.display = "none"
+                        submitBtn.disabled = false;
+
                         // Reset le flou et le compteur pour chaque image
                         if(currentMode === "flou") {
                             startBlurGame()
                             timer(30)
                             TimerAudio.play()
-
                         }
-     
                         loadMotoImage(data.motos[currentMotoIndex].images[currentImageIndex]);
                     } else {
                         // Si plus d'images disponibles, reste sur la dernière
@@ -89,31 +87,25 @@ function initializeGame(data) {
                         clearInterval(timerInterval);
                         motoImage.style.filter = `blur(0px)`;  
                         clearInterval(blurInterval);
-                        remainingAttempts.innerHTML = `0`; //marche pas je sais pas pourquoi pour l'instant
                     }
-
-                    feedback.textContent = `Vous avez perdu. La bonne réponse était : ${correctName}.`;
+                    feedback.textContent = `Vous avez perdu. La bonne réponse était : ${correctName}`;
                     feedback.style.color = "red";
-
-                    verificationGame(data)
+                    correctName = ' ';
+                    verificationGame(data, correctName)
                 }
         }, 1000)
         guessInput.value = ''; // Réinitialise la saisie
     };
 })
-
     // Gestion du clic sur le bouton "Suivant"
     nextBtn.addEventListener('click', () => {
-
+        guessInput.value = '';
         if(currentMode === "flou"){
             startBlurGame()
-
         }
-
         if(currentMode === "timer"){
             timerGame()
         }
-
         currentMotoIndex++;
         attemptsLeft = data.motos[currentMotoIndex]["images"].length;
         currentImageIndex = 0; // Réinitialise l'index des images
@@ -136,15 +128,17 @@ function initializeGame(data) {
         motoImage.src = imageUrl;
     }
 }
-
-function verificationGame(data) {
+function verificationGame(data, nameMoto) {
      // Vérifie s'il y a d'autre motos à deviner
      if(data.motos[currentMotoIndex + 1]){
         nextBtn.style.display = "block"; // Affiche le bouton "Suivant" 
+    } else {
+        setTimeout(() => {
+            endGame(nameMoto)
+        }, 5000);
     }
     submitBtn.disabled = true; // Désactive le bouton "Valider"
 }
-
 const timeDisplay = document.getElementById('time-display');
 const circleProgress = document.getElementById('circle-progress');
 const chronometre = document.querySelector('.timer-container');
@@ -160,15 +154,15 @@ const CorrectAudio = document.getElementById('CorrectAudio');
 const FondAudio = document.getElementById('FondAudio');
 
 
-// Fonction pour jouer l'audio
-function playFondAudio() {
-    FondAudio.play().then(() => {
-      console.log("Audio joué");
-    }).catch(() => {
-      console.error("Erreur de lecture de l'audio:");
-    });
-}
-playFondAudio()
+// // Fonction pour jouer l'audio
+// function playFondAudio() {
+//     FondAudio.play().then(() => {
+//       console.log("Audio joué");
+//     }).catch(() => {
+//       console.error("Erreur de lecture de l'audio:");
+//     });
+// }
+// playFondAudio()
 
 let color;
 let timerInterval; 
@@ -198,7 +192,6 @@ function timer(temps) {
             clearInterval(timerInterval); // Stopper le timer à 0
             nextBtn.style.display = "Block";
             submitBtn.disabled = true;
-
         }
     }, 1000);
 }
@@ -271,5 +264,35 @@ function plusSlides(n) {
     }
     showSlides(); 
 }
+
+
+function endGame(nameMoto) { 
+    currentMotoIndex = 0;
+    currentImageIndex = 0;
+    attemptsLeft = 0;
+    currentMode = "normal"; 
+
+    // Arrêter les intervalles et réinitialiser les styles
+    clearInterval(timerInterval);
+    clearInterval(blurInterval);
+    motoImage.style.filter = "none";
+    chronometre.style.display = "none";
+
+    // Réinitialiser l'interface utilisateur
+    feedback.textContent = '';
+    feedback.style.color = '';
+    nextBtn.style.display = "none";
+    submitBtn.disabled = false;
+    remainingAttempts.textContent = '';
+    guessInput.value = '';
+
+    nameMoto.value = '';
+    
+    select_games.style.display = "block";
+    game_container.style.display = "none";
+    loadJson()
+}
+
 showSlides();
+loadJson()
 
